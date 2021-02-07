@@ -55,12 +55,26 @@ class MessageList extends Component {
         <div className="channel-content" ref={list => this.list = list}>
           {
             this.props.messages.map((message) => {
-
+              return <Message key={message.id} {...message} />;
             })
           }
-    )
+        </div>
+        <MessageForm selectedChannel={this.props.selectedChannel} />
+      </div>
+    );
+  };
+
+  function mapStateToProps(state) {
+    return {
+      messages: state.messages
+    };
   }
+
+  function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ fetchMessage, appendMessage }, dispatch);
   }
+
+  export default connect(mapStateToProps, mapDispatchToProps)(MessageList);
 
 
 }
